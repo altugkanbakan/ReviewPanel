@@ -1,0 +1,25 @@
+# Generated review reports — may contain local paths and unpublished manuscript text
+PRE_SUBMISSION_MEDICAL_REVIEW_*.md
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Common manuscript file types — do not commit unpublished papers
+*.docx
+*.pdf
+*.tex
+*.bib
+
+# But keep README and knowledge base markdown
+!README.md
+!knowledge_base/**/*.md
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# OS files
+.DS_Store
+Thumbs.db
