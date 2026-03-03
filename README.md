@@ -1,9 +1,11 @@
 # HomeMadeReviewer-Local
 
-A standalone Python rewrite of HomeMadeReviewer that runs 6 sequential review
-agents against a local LLM served by [Ollama](https://ollama.com). Designed for
-**Qwen2.5 7B** (fits in ~6 GB VRAM). Agents run sequentially to stay within
-VRAM budget.
+A standalone Python rewrite of HomeMadeReviewer (not public) that runs 6 sequential review agents against a local LLM served by [Ollama](https://ollama.com). Designed for **Qwen2.5 7B** (fits in even ~6 GB VRAM). Agents run sequentially to stay within
+VRAM budget. Currently specialized for Emergency Medicine. The journal profiles have been prepared by standardizing submission guidelines from the respective journals into JSON format. These **journal profiles do not claim to reflect the full perspectives of the mentioned journals** — modify and extend them as needed.
+
+Inspired by [Claes Bäckman](https://github.com/claesbackman)'s [AI-research-feedback](https://github.com/claesbackman/AI-research-feedback) repo.
+
+> **WARNING**: This tool is not designed to be a decision-making authority. It should be kept in mind that AI tools can make mistakes. Outputs must be verified manually. Furthermore, it should be noted that reviewing articles containing sensitive information (such as protected health information), original hypothesis, or articles that have been submitted to journals using cloud based tools would violate privacy according to the 2025 ICMJE and COPE guidelines. The use of artificial intelligence in areas such as fact-checking and editing requires disclosure.
 
 ## Project Structure
 
