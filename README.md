@@ -87,7 +87,7 @@ is saved in the current working directory.
 ## Model Notes
 
 - Default model: `qwen2.5:7b`
-- `num_ctx: 32768` (32k token context window)
+- `num_ctx: 32768` (32k token context window) If you want to reduce the context window modify it.
 - `temperature: 0.3` (low randomness for structured output)
 - Any model available in your local Ollama instance can be used via `--model`
 
