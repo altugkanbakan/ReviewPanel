@@ -1,5 +1,5 @@
 """
-review.py — CLI entry point and orchestrator for HomeMadeReviewer-Local
+review.py — CLI entry point and orchestrator for ReviewPanel
 
 Usage:
     python review.py                                  # auto-detect, top-medical
@@ -214,7 +214,7 @@ def main():
     args = parse_args()
 
     print("=" * 60)
-    print("HomeMadeReviewer-Local")
+    print("ReviewPanel")
     print("=" * 60)
     print(f"Journal    : {args.journal}")
     print(f"Model      : {args.model}")
