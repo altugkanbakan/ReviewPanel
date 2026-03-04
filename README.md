@@ -1,4 +1,5 @@
-# Review Panel
+# Review Panel <img width="500" height="500" alt="RevPanel" src="https://github.com/user-attachments/assets/d6c1b0ac-9b12-4c41-b2a0-2a653fc4bb89" />
+
 
 A standalone Python rewrite of HomeMadeReviewer (not public) that runs 6 sequential review agents against a local LLM served by [Ollama](https://ollama.com). Designed for **Qwen2.5 7B** (fits in even ~6 GB VRAM). Agents run sequentially to stay within
 VRAM budget. Currently specialized for Emergency Medicine. The journal profiles have been prepared by standardizing submission guidelines from the respective journals into JSON format. These **journal profiles do not claim to reflect the full perspectives of the mentioned journals** — modify and extend them as needed.
