@@ -1,7 +1,10 @@
-# Review Panel <img width="500" height="500" alt="RevPanel" src="https://github.com/user-attachments/assets/d6c1b0ac-9b12-4c41-b2a0-2a653fc4bb89" />
+# Review Panel
 
+<img width="180" alt="RevPanel" src="https://github.com/user-attachments/assets/d6c1b0ac-9b12-4c41-b2a0-2a653fc4bb89" />
 
-A standalone Python rewrite of HomeMadeReviewer (not public) that runs 6 sequential review agents against a local LLM served by [Ollama](https://ollama.com). Designed for **Qwen2.5 7B** (fits in even ~6 GB VRAM). Agents run sequentially to stay within
+> **Note**: This is the CLI edition of Review Panel. If you want a GUI, ready-to-run binaries, crash recovery, and a persistent review cache, use the desktop successor: [altugkanbakan/reviewpanel-desktop](https://github.com/altugkanbakan/reviewpanel-desktop).
+
+A standalone Python rewrite of HomeMadeReviewer (not public) that runs 6 sequential review agents against a local LLM served by [Ollama](https://ollama.com). Designed for **Qwen2.5 7B**. It runs on a ~6 GB VRAM card, but the model does not fit entirely on the GPU there — part of it spills over to the CPU (full GPU placement needs model weights under roughly 3.8 GB; see [Model Notes](#model-notes)). Agents run sequentially to stay within
 VRAM budget. Currently specialized for Emergency Medicine. The journal profiles have been prepared by standardizing submission guidelines from the respective journals into JSON format. These **journal profiles do not claim to reflect the full perspectives of the mentioned journals** — modify and extend them as needed.
 
 Inspired by [Claes Bäckman](https://github.com/claesbackman)'s [AI-research-feedback](https://github.com/claesbackman/AI-research-feedback) repo.
@@ -88,7 +91,17 @@ is saved in the current working directory.
 ## Model Notes
 
 - Default model: `qwen2.5:7b`
-- `num_ctx: 32768` (32k token context window) If you want to reduce the context window modify it.
+- `num_ctx: 32768` (32k token context window). On a 6 GB VRAM card this is the worst case: the Q4_K_M weights alone are 4.68 GB, and the KV cache for this model adds ~56 KiB per token, so a 32k context needs an extra ~1.75 GiB — about 6.4 GB total, which does not fit in 6 GB. Reducing `num_ctx` gives a clear speedup. Measured on an RTX 3060 Laptop (6144 MiB) with `ollama ps`:
+
+  | `num_ctx` | CPU/GPU split | Generation speed |
+  |---|---|---|
+  | 4096 | 18%/82% | 21.9 tok/s |
+  | 8192 | 21%/79% | 20.0 tok/s |
+  | 14336 | 27%/73% | 14.7 tok/s |
+  | 32768 | (full measurement) | 5.7 tok/s |
+
+  No `num_ctx` value made `qwen2.5:7b` fit entirely on the 6 GB GPU — even at 4096, 18% of the layers stayed on the CPU. In the same measurements, full GPU placement required model weights below ~3.8 GB (a 3.81 GB model loaded 100% on GPU; a 4.28 GB model only 74%).
+- Alternative model for 6 GB cards: `qwen3:4b-instruct-2507-q4_K_M` (2.5 GB weights) fits 100% on the GPU and, in the same test, finished each agent in ~50 s versus ~73 s for `qwen2.5:7b`. It is not the default here — use it via `--model qwen3:4b-instruct-2507-q4_K_M`.
 - `temperature: 0.3` (low randomness for structured output)
 - Any model available in your local Ollama instance can be used via `--model`
 
